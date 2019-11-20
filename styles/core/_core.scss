@@ -16,6 +16,11 @@
     }
   }
   input, select {
+    min-width: 50%;
+    width: -webkit-fill-available;
+    @media screen and (max-width: $sm){
+      width: -webkit-fill-available;
+    }
     margin-left: 1em;
     @media screen and (max-width: $sm){
       margin-left: unset;
@@ -31,6 +36,7 @@
   
   .checkbox-group-wrapper {
     display: flex;
+    width: -webkit-fill-available;
     @media screen and (max-width: $sm){
       flex-direction: column;
     }
@@ -59,6 +65,8 @@
 
 .date-select-wrapper{
   display: flex;
+  width: -webkit-fill-available;
+
   .input-wrapper {
     margin-left: 0;
   }
@@ -75,9 +83,13 @@
   @media screen and (max-width: $sm){
     flex-direction: column;
     align-items: flex-start;
-
   }
-
+  label {
+    width: 30%;
+    @media screen and (max-width: $sm){
+      width: 100%;
+    }  
+  }
 }
 .submit-button-wrapper {
   display: flex;
@@ -103,4 +115,52 @@ button {
     background: linear-gradient(to bottom right,  $color-violet-full, $color-blue-full);
     box-shadow: 0 0 5px 1px $color-violet-full;
   }
+}
+
+.geosuggest {
+  margin: 0;
+  padding: 0;
+  width: -webkit-fill-available;
+}
+
+.geosuggest__input {
+  min-width: 50%;
+  width: -webkit-fill-available
+}
+
+
+.geosuggest__suggests-wrapper {
+  position: absolute;
+  z-index: 10;
+  margin-left: 0;
+}
+
+.geosuggest__suggests {
+  padding: 0;
+  box-sizing: border-box;
+  box-shadow: 0.4rem 0.4rem 0.4rem #e5e5e5;
+  background: transparent;
+  border-top: 0.1rem solid #e5e5e5;
+  border-bottom: 0.1rem solid #e5e5e5;
+  border-left: 0.1rem solid #e5e5e5;
+  border-right: 0.1rem solid #e5e5e5;
+  border-radius: 0;
+  outline: 0;
+  background-color: #fafafa;
+}
+
+.geosuggest__item {
+  list-style-type: none;
+}
+
+.geosuggest__suggests--hidden {
+  max-height: 0;
+  padding: 0 !important;
+  overflow: hidden;
+  border-width: 0;
+}
+
+.geosuggest__item--active {
+  background: $color-blue-full;
+  color: #fff;
 }

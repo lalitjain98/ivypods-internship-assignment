@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import Geosuggest from 'react-geosuggest';
 
 const CustomInput = ({ multiple = false, type, children, label, onChange, ...props }) => {
 
@@ -65,6 +66,16 @@ const CustomInput = ({ multiple = false, type, children, label, onChange, ...pro
     onChange(props.name, values);
   }
 
+  const handleLocationChange = (value) => {
+    console.log(value)
+  }
+
+  const onSuggestSelect = (data) => {
+    if (!data) return;
+    console.log(data);
+    onChange(props.name, data.label)
+  }
+
   const renderInput = () => {
     switch (type) {
       case 'select':
@@ -75,7 +86,7 @@ const CustomInput = ({ multiple = false, type, children, label, onChange, ...pro
         // console.log(props);
         return (
           <>
-            <label htmlFor={props.id || props.name}>{label}</label>
+            {label && (<label htmlFor={props.id || props.name}>{label}</label>)}
             <select
               multiple={multiple}
               {...selectProps}
@@ -106,33 +117,45 @@ const CustomInput = ({ multiple = false, type, children, label, onChange, ...pro
       //   )
       case 'radioGroup':
         return (
-          <div className="checkbox-group-wrapper">
+          <>
             <label htmlFor={props.name}>{label}</label>
-            {
-              props.options.map((item, index) => (
+            <div className="checkbox-group-wrapper">
+              {
+                props.options.map((item, index) => (
 
-                <div className={`ui checkbox checkbox-container radio ${checkedOptions.includes(item.value) && "checked"}`} key={item.value}>
-                  <input type="radio" {...props} value={item.value} onBlur={handleBlur} onChange={handleChange} />
-                  <label htmlFor={item.value}>{item.label}</label>
-                </div>
-              ))
-            }
+                  <div className={`ui checkbox checkbox-container radio ${checkedOptions.includes(item.value) && "checked"}`} key={item.value}>
+                    <input type="radio" {...props} value={item.value} onBlur={handleBlur} onChange={handleChange} />
+                    <label htmlFor={item.value}>{item.label}</label>
+                  </div>
+                ))
+              }
 
-          </div>
+            </div>
+          </>
+
         )
       case 'checkboxGroup':
         return (
-          <div className="checkbox-group-wrapper">
+          <>
             <label htmlFor={props.name}>{label}</label>
-            {
-              props.options.map((item, index) => (
-                <div className={`ui checkbox checkbox-container ${checkedOptions.includes(item.value) && "checked"}`} key={item.value}>
-                  <input type="checkbox" {...props} value={item.value} onBlur={handleBlur} checked={checkedOptions.includes(item.value)} onChange={handleCheckboxGroupChange} />
-                  <label htmlFor={item.value}>{item.label}</label>
-                </div>
-              ))
-            }
-          </div>
+            <div className="checkbox-group-wrapper">
+              {
+                props.options.map((item, index) => (
+                  <div className={`ui checkbox checkbox-container ${checkedOptions.includes(item.value) && "checked"}`} key={item.value}>
+                    <input type="checkbox" {...props} value={item.value} onBlur={handleBlur} checked={checkedOptions.includes(item.value)} onChange={handleCheckboxGroupChange} />
+                    <label htmlFor={item.value}>{item.label}</label>
+                  </div>
+                ))
+              }
+            </div>
+          </>
+        )
+      case 'location':
+        return (
+          <>
+            <label htmlFor={props.id || props.name}>{label}</label>
+            <Geosuggest placeDetailFields={['name']} className="text-input" onSuggestSelect={onSuggestSelect} onChange={handleLocationChange} country={'in'} required />
+          </>
         )
       default:
         return (

@@ -3,7 +3,7 @@ import UserInfoFormValidation from '../validations/UserInfo';
 import CustomInput from './common/inputs/CustomInput';
 import DateInput from './common/inputs/DateInput';
 import { languageOptionsObj, hobbiesOptionsObj, genderOptionsObj } from "../constants";
-
+import Geosuggest from 'react-geosuggest';
 class UserInfoForm extends React.Component {
   
   initState = {
@@ -40,30 +40,31 @@ class UserInfoForm extends React.Component {
       return valid;
       // console.log(valid);
     } catch(validationErrors) {
-      console.log(validationErrors)
+      // console.log(validationErrors)
       const allErrors = validationErrors.inner.reduce((errors, currentValidation) => Object.assign(errors, {
         [currentValidation.path]: currentValidation.errors[0], //first error is enough for this demo
       }), {});
       this.setState(state => ({...state, errors: allErrors}))
-      console.log('allErrors', allErrors)
+      // console.log('allErrors', allErrors)
       return allErrors;
     }
   }
   
   handleBlur = async (name) => {
-    console.log("handleBlur", name);
+    // console.log("handleBlur", name);
     this.setState(state => ({...state, touched: {...state.touched, [name]: true } }));
   }
 
   handleChange = async (name, value) => {
-    console.log(name, value);
+    // console.log(name, value);
     this.setState(state => ({...state, [name]: value}));
   }  
 
   validateAndHandleSubmit = async (e) => {
     e.preventDefault();
     let errors = await this.validate()
-    console.log(this.state);
+    console.log("################################")
+    console.log("Submit Form Data\n", this.state);
   }
 
   render() {
@@ -103,6 +104,16 @@ class UserInfoForm extends React.Component {
             error={errors.mobileNo}
             {...commonInputProps}
           />
+          <CustomInput
+            label="Organization"
+            name="organization"
+            type="location"
+            placeholder="College/Company"
+            touched={touched.organization}
+            error={errors.organization}
+            {...commonInputProps}
+          />
+          
           <DateInput 
             name={'dateOfBirth'} 
             label={'Date of Birth'}

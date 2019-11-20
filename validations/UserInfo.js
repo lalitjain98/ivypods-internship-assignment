@@ -12,6 +12,8 @@ const UserInfo = Yup.object({
     .matches(/[0-9]+/, { message: 'Phone number is not valid', excludeEmptyString: false })
     .test('len', 'Must be 10 Digit Phone Number', val => val.length === 10)
     .required('Required'),
+  organization: Yup.string()
+    .max(250,  `Must be 250 characters or less`),
   hobbies: Yup.array()
     .ensure()
     .of( Yup.mixed().oneOf(Object.values(hobbiesOptionsObj)),'Invalid Hobby'),
