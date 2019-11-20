@@ -1,0 +1,12 @@
+.input-wrapper {
+  // display: flex;
+  // align-items: baseline;
+  margin: 1em;
+  input, select {
+    margin-left: 1em;
+  }
+  input[type=checkbox], input[type=radio] {
+    margin-left: unset;
+    margin-right: 1em;
+  }
+}
