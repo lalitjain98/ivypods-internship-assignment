@@ -1,16 +1,25 @@
 
 @import "./core/index.scss";
 html {
+  ::placeholder {
+    color: rgba(0,0,0,0.2);
+  }  
   min-height: 100vh;
-  background: linear-gradient(to bottom right, transparent, $color-green, transparent, $color-violet, transparent), 
-              linear-gradient(to bottom left, transparent, $color-green, transparent, $color-violet, transparent),
-              linear-gradient(to top right, transparent, $color-green, transparent, $color-violet, transparent), 
-              linear-gradient(to top left, transparent, $color-green, transparent, $color-violet, transparent),
-              linear-gradient(to bottom , transparent, $color-green, transparent, $color-violet, transparent), 
-              linear-gradient(to top, transparent, $color-green, transparent, $color-violet, transparent),
-              $color-violet;
-  background-size: cover;
+  margin: 0 !important;
+  padding: 0 !important;
+
   body {
-    
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom right, transparent, $color-green, transparent, $color-blue, transparent), 
+              linear-gradient(to bottom left, transparent, $color-green, transparent, $color-blue, transparent),
+              linear-gradient(to top right, transparent, $color-green, transparent, $color-blue, transparent), 
+              linear-gradient(to top left, transparent, $color-green, transparent, $color-blue, transparent),
+              linear-gradient(to bottom , transparent, $color-green, transparent, $color-blue, transparent), 
+              linear-gradient(to top, transparent, $color-green, transparent, $color-blue, transparent),
+              $color-blue;
+    background-size: cover !important;
+    background-attachment: fixed !important;
   }
 }

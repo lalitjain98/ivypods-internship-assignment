@@ -1,26 +1,26 @@
 import * as Yup from 'yup';
 import { languageOptionsObj, hobbiesOptionsObj, genderOptionsObj } from "../constants";
 const UserInfo = Yup.object({
-  firstName: Yup.string()
-    .min(3,  `Must be 3 characters or less`)
+  name: Yup.string()
+    .min(3,  `Must be 3 characters or more`)
     .max(100,  `Must be 100 characters or less`)
     .required('Required'),
-  lastName: Yup.string()
-    .max(100, 'Must be 100 characters or less'),
-    // .required('Required'),
   email: Yup.string()
     .email('Invalid email addresss`')
     .required('Required'),
-  mobileNo: Yup.number()
-    .integer('Must not have decimal point')
-    .test('len', `Must be exactly 10 digits`, val => val && val.toString().length === 10)
+  mobileNo: Yup.string()
+    .matches(/[0-9]+/, { message: 'Phone number is not valid', excludeEmptyString: false })
+    .test('len', 'Must be 10 Digit Phone Number', val => val.length === 10)
     .required('Required'),
   hobbies: Yup.array()
+    .ensure()
     .of( Yup.mixed().oneOf(Object.values(hobbiesOptionsObj)),'Invalid Hobby'),
   gender: Yup.mixed()
-    .oneOf(Object.values(genderOptionsObj),'Invalid Gender'),
+    .required('Required')
+    .oneOf(Object.values(genderOptionsObj),`Must be one of ${Object.keys(genderOptionsObj).join(', ')}`),
   languages: Yup.array()
-    .of( Yup.mixed().oneOf(Object.values(hobbiesOptionsObj)),'Invalid Hobby'),
+    .ensure()
+    .of( Yup.mixed().oneOf(Object.values(languageOptionsObj)),'Invalid Hobby'),
   
 })
 

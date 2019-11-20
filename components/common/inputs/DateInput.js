@@ -13,7 +13,7 @@ const DateInput = ({ name, children, label, ...props }) => {
     touched: false,
     dayOptions: [],
     monthOptions: range(1, 13),
-    yearOptions: range(2015, 2100),
+    yearOptions: range(1970, moment().year()+1),
   }
 
   const optionsArrayToObjectsArray = (optionsArray) => optionsArray.reduce((options, label) => { options.push({ label, value: label }); return options }, [])
@@ -29,11 +29,17 @@ const DateInput = ({ name, children, label, ...props }) => {
       case `${name}_month`:
           newState.month = value;
           newState.day = '';
-          console.log(newState.year, newState.month, moment().year(newState.year).month(newState.month-1).daysInMonth())
-          newState.dayOptions = range(1, moment().year(newState.year).month(newState.month-1).daysInMonth()+1)
+          const dayOfCurrentMonth = moment().year(moment().year()).month(moment().month()).date()+1
+          if(newState.year == moment().year() && newState.month == moment().month()+1) {
+            newState.dayOptions = range(1, dayOfCurrentMonth)
+          } else {
+            newState.dayOptions = range(1, moment().year(newState.year).month(newState.month-1).daysInMonth()+1)
+          }
         break;
       case `${name}_year`:
           newState.year = value;
+          if(value == moment().year()) newState.monthOptions = range(1, moment().month()+2)
+          else newState.monthOptions = range(1, 13)
           newState.month = '';
           newState.day = '';
         break;
@@ -54,8 +60,32 @@ const DateInput = ({ name, children, label, ...props }) => {
 
   const { day, month, year } = state;
   return (
-    <div className="input-wrapper">
-      <div className="date-select-input-wrapper">
+    <div className={`${props.dateInputContainerClassName|| 'input-wrapper label-input-wrapper'}`}>
+      <label htmlFor="date">{label}</label>
+      <div className="date-select-wrapper">
+      <CustomInput
+          name={`${name}_year`}
+          type="select"
+          value={year}
+          options={optionsArrayToObjectsArray(state.yearOptions)}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Year"
+          // isSearchable={false}
+          // label={'Year'}
+        />
+      <CustomInput
+          name={`${name}_month`}
+          type="select"
+          value={month}
+          options={optionsArrayToObjectsArray(state.monthOptions)}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Month"
+          disabled={!year}
+          // isSearchable={false}
+          // label={'Month'}
+        />
         <CustomInput
           name={`${name}_day`}
           type="select"
@@ -65,28 +95,8 @@ const DateInput = ({ name, children, label, ...props }) => {
           onBlur={handleBlur}
           placeholder="Day"
           disabled={!month}
-          isSearchable={false}
-        />
-        <CustomInput
-          name={`${name}_month`}
-          type="select"
-          value={month}
-          options={optionsArrayToObjectsArray(state.monthOptions)}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="Month"
-          disabled={!year}
-          isSearchable={false}
-        />
-        <CustomInput
-          name={`${name}_year`}
-          type="select"
-          value={year}
-          options={optionsArrayToObjectsArray(state.yearOptions)}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="Year"
-          isSearchable={false}
+          // isSearchable={false}
+          // label={'Day'}
         />
       </div>
       {errorMessage}
