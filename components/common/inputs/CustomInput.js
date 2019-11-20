@@ -15,7 +15,7 @@ const CustomInput = ({ multiple = false, type, children, label, onChange, ...pro
   const handleChange = (e) => {
     e.persist();
     // console.log(e)
-    console.log(e.target.name, e.target.value, e.target.checked);
+    // console.log(e.target.name, e.target.value, e.target.checked);
     e.target.type === 'checkbox' ? onChange(e.target.name, e.target.checked) : onChange(e.target.name, e.target.value);
   }
 
@@ -55,19 +55,19 @@ const CustomInput = ({ multiple = false, type, children, label, onChange, ...pro
   const handleCheckboxGroupChange = (e) => {
     e.persist();
     let values = [...checkedOptions];
-    console.log(e.target.name, e.target.value, e.target.checked);
+    // console.log(e.target.name, e.target.value, e.target.checked);
     if (e.target.checked) {
       values = [...values, e.target.value];
     } else {
       values = values.filter(v => v !== e.target.value);
     }
     setCheckedOptions(values);
-    console.log(values);
+    // console.log(values);
     onChange(props.name, values);
   }
 
   const handleLocationChange = (value) => {
-    console.log(value)
+    // console.log(value)
   }
 
   const onSuggestSelect = (data) => {
